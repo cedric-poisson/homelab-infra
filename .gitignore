@@ -1,0 +1,19 @@
+# Terraform / OpenTofu
+*.tfstate
+*.tfstate.backup
+*.tfstate.*.backup
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+
+# Secrets / env
+.env
+*.pem
+*.key
+
+# OS / éditeur
+.DS_Store
+.vscode/
