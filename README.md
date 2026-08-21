@@ -14,3 +14,8 @@ Automatiser le provisionnement d'une infrastructure Azure reproductible, en part
 ## Note coût
 Le control plane AKS est gratuit ; les coûts viennent des VMs (node pools), du stockage et du réseau.
 Réflexe : `tofu destroy` après chaque session de travail pour ne pas laisser tourner les ressources inutilement.
+
+## Statut
+- [x] Compte Azure créé
+- [ ] Resource group + VNet
+- [ ] Premier `tofu apply`
