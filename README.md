@@ -17,5 +17,14 @@ Réflexe : `tofu destroy` après chaque session de travail pour ne pas laisser t
 
 ## Statut
 - [x] Compte Azure créé
-- [ ] Resource group + VNet
-- [ ] Premier `tofu apply`
+- [x] Resource group + VNet + subnet (OpenTofu)
+- [x] Premier `tofu apply`
+- [x] VM de test provisionnée + accès SSH validé
+- [ ] Cluster AKS
+- [ ] Pipeline CI/CD (GitHub Actions)
+
+## Notes / leçons apprises
+- **Région** : `francecentral` avait des restrictions de capacité sur les tailles de VM B-series pour cet abonnement étudiant → bascule vers `swedencentral`.
+- **Quota** : un abonnement étudiant est limité à 3 IP publiques par région.
+- **Auth OpenTofu → Azure** : via un service principal dédié (`az ad sp create-for-rbac`), identifiants passés en variables d'environnement `ARM_*`, jamais commités.
+- **Cohérence Azure** : le provider `azurerm` peut occasionnellement échouer juste après la création d'une ressource (délai de réplication côté Azure Resource Manager) — se résout avec `tofu import` sur la ressource concernée plutôt qu'en relançant `apply` en boucle.
