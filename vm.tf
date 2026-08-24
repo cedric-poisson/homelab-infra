@@ -55,7 +55,7 @@ resource "azurerm_linux_virtual_machine" "vm_test" {
 
   admin_ssh_key {
     username   = "cedric"
-    public_key = file("~/.ssh/homelab_vm_rsa.pub")
+    public_key = file("${path.module}/ssh/homelab_vm_rsa.pub")
   }
 
   os_disk {
