@@ -3,6 +3,7 @@ resource "azurerm_kubernetes_cluster" "homelab" {
   location            = azurerm_resource_group.homelab.location
   resource_group_name = azurerm_resource_group.homelab.name
   dns_prefix          = "akshomelabdev"
+  oidc_issuer_enabled = true
 
   network_profile {
   network_plugin = "kubenet"
