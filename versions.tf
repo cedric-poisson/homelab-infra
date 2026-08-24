@@ -7,8 +7,14 @@ terraform {
       version = "~> 3.100"
     }
   }
+    backend "azurerm" {
+    resource_group_name  = "rg-tfstate"
+    storage_account_name = "sthomelabtfstate2972"
+    container_name        = "tfstate"
+    key                    = "homelab-infra.tfstate"
+  }
 }
-
+ 
 provider "azurerm" {
   features {}
 }
