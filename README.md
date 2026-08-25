@@ -2,6 +2,8 @@
 
 Infrastructure as Code pour provisionner des ressources Azure via OpenTofu — VM(s) simples et/ou cluster Kubernetes (AKS), avec pipeline CI/CD GitHub Actions.
 
+📝 **[J'ai écrit un post détaillant chaque erreur rencontrée pendant ce projet](https://cedric-poisson.hashnode.dev/every-error-i-hit-deploying-kubernetes-on-azure-with-opentofu-and-what-each-one-taught-me)** — utile si tu veux comprendre les choix, pas juste copier le code.
+
 ## Objectif
 Automatiser le provisionnement d'une infrastructure Azure reproductible, en partant d'une VM simple et en montant en complexité vers un cluster Kubernetes managé selon le budget/crédit disponible (compte étudiant Azure).
 
