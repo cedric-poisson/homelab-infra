@@ -49,7 +49,6 @@ az storage account create --name <ton-nom-unique> --resource-group rg-tfstate --
 az storage container create --name tfstate --account-name <ton-nom-unique>
 ```
 
-**Variables Terraform** — un fichier `terraform.tfvars` (non versionné), avec au minimum la région, la taille des VMs/node pools, et ta plage d'IP publique autorisée en SSH.
 
 **Pipeline CI/CD** — si tu utilises la GitHub Action fournie, il faut configurer les secrets `ARM_*` ci-dessus dans Settings > Secrets and variables > Actions du repo, et un token avec la permission `workflow` si tu modifies les fichiers `.github/workflows/` depuis un push.
 
