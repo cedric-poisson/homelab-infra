@@ -26,6 +26,35 @@ Réflexe : `tofu destroy` après chaque session de travail pour ne pas laisser t
 - [x] Déploiement d'une app via Helm (nginx, chart custom)
 - [x] Pipeline CI/CD (GitHub Actions, plan sur PR + apply automatique sur merge)
 
+## Prérequis pour déployer ce projet
+
+Ce repo est public mais volontairement incomplet : les identifiants et la configuration propre à un environnement ne sont jamais versionnés. Pour déployer depuis un clone, il faut recréer localement :
+
+**Authentification Azure** — un service principal dédié, créé via :
+```bash
+az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/<subscription-id>"
+```
+puis ses identifiants exportés en variables d'environnement (jamais commités) :
+```bash
+export ARM_CLIENT_ID="..."
+export ARM_CLIENT_SECRET="..."
+export ARM_SUBSCRIPTION_ID="..."
+export ARM_TENANT_ID="..."
+```
+
+**Backend distant OpenTofu** — le bloc `backend "azurerm"` dans `versions.tf` pointe vers un storage account précis (`sthomelabtfstate2972`, resource group `rg-tfstate`). Ce storage account n'existe pas par défaut : il faut le créer avant le premier `tofu init`, avec un nom globalement unique sur Azure (donc à adapter dans `versions.tf` si tu redéploies ce repo toi-même) :
+```bash
+az group create --name rg-tfstate --location swedencentral
+az storage account create --name <ton-nom-unique> --resource-group rg-tfstate --sku Standard_LRS
+az storage container create --name tfstate --account-name <ton-nom-unique>
+```
+
+**Variables Terraform** — un fichier `terraform.tfvars` (non versionné), avec au minimum la région, la taille des VMs/node pools, et ta plage d'IP publique autorisée en SSH.
+
+**Pipeline CI/CD** — si tu utilises la GitHub Action fournie, il faut configurer les secrets `ARM_*` ci-dessus dans Settings > Secrets and variables > Actions du repo, et un token avec la permission `workflow` si tu modifies les fichiers `.github/workflows/` depuis un push.
+
+Sans ces éléments, `tofu apply` échouera proprement en réclamant les valeurs manquantes — comportement attendu.
+
 ## Notes / leçons apprises
 - **Région** : `francecentral` avait des restrictions de capacité sur les tailles de VM B-series pour cet abonnement étudiant → bascule vers `swedencentral`.
 - **Quota** : un abonnement étudiant est limité à 3 IP publiques par région, et à un quota total de vCPU par région (indépendant du quota par famille de VM) — surveiller avec `az vm list-usage --location <region> --output table`.
